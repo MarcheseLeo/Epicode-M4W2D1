@@ -284,8 +284,12 @@ button {
   cursor: pointer;
 }
 
-.icon:hover i{
+.icon:hover i.fa-regular.fa-heart{
   color: red
+}
+
+i.fa-solid.fa-heart{
+  color: red;
 }
 
 /* Testi (Mi piace, Descrizione, Commenti) */
