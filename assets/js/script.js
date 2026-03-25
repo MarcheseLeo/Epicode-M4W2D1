@@ -20,95 +20,44 @@ const getPhotos = async (search) => {
 
 //Function to create Cards
 const createCard = (photo) => {
-    const container = document.querySelector(".card-container")
-
-    const card = document.createElement('div')
-    card.classList.add('ig-card')
-
-    const igHeader = document.createElement('div')
-    igHeader.classList.add('ig-header')
-    card.appendChild(igHeader)
-
-    const userInfo = document.createElement('div')
-    userInfo.classList.add('user-info')
-    igHeader.append(userInfo)
-
-    const profileImg = document.createElement('img')
-    profileImg.src = "https://via.placeholder.com/32"
-    profileImg.alt = "Immagine profilo fotografo"
-    profileImg.classList.add('profile-pic')
-    userInfo.appendChild(profileImg)
-
-    const name = document.createElement('span')
-    name.classList.add('username')
-    name.innerText = photo.author
-    userInfo.appendChild(name)
-
-    const options = document.createElement('div')
-    options.classList.add('options')
-    options.innerText = '•••'
-    igHeader.appendChild(options)
-
-    const igMedia = document.createElement('div')
-    igMedia.classList.add('ig-media')
-    card.appendChild(igMedia)
-
-    const img = document.createElement('img')
-    img.src = photo.src.tiny
-    img.alt = photo.alt
-    igMedia.appendChild(img)
-
-    const igActions = document.createElement('div')
-    igActions.classList.add('ig-actions')
-    card.appendChild(igActions)
-
-    const leftActions = document.createElement('div')
-    leftActions.classList.add('left-actions')
-    igActions.appendChild(leftActions)
-
-    const heartSpan = document.createElement('span')
-    heartSpan.classList.add('icon')
-    leftActions.appendChild(heartSpan)
-
-    const heartIcon = document.createElement('i')
-    if (photo.liked)
-        heartIcon.classList.add('fa-solid', 'fa-heart')
-    else
-        heartIcon.classList.add('fa-regular', 'fa-heart')
-    heartSpan.appendChild(heartIcon)
-
-    const rightActions = document.createElement('div')
-    rightActions.classList.add('right-actions')
-    igActions.appendChild(rightActions)
-
-    const savedSpan = document.createElement('span')
-    savedSpan.classList.add('icon')
-    rightActions.appendChild(savedSpan)
-
-    const savedIcon = document.createElement('i')
-    savedIcon.classList.add('fa-regular', 'fa-bookmark')
-    savedSpan.appendChild(savedIcon)
-
-    const igLikes = document.createElement('div')
-    igLikes.classList.add('ig-likes')
-    igLikes.innerHTML = `Piace a <strong>1.234 persone</strong>`
-    card.appendChild(igLikes)
-
-    const igCaption = document.createElement('div')
-    igCaption.classList.add('ig-caption')
-    igCaption.innerHTML = `<strong>${photo.author}</strong> ${photo.alt} </div>`
-    card.appendChild(igCaption)
-
-    heartIcon.addEventListener('click', () => {
-        switchCLass(heartIcon, 'fa-regular', 'fa-solid')
-    })
-
-    savedIcon.addEventListener('click', () => {
-        switchCLass(savedIcon, 'fa-regular', 'fa-solid')
-    })
-    container.appendChild(card)
+    return `
+        <div class="ig-card">
+            <div class="ig-header">
+                <div class="user-info">
+                    <img src="https://via.placeholder.com/32" class="profile-pic" alt="Immagine profilo fotografo">
+                    <span class="username">${photo.author}</span>
+                </div>
+                <div class="options">•••</div>
+            </div>
+            <div class="ig-media">
+                <img src="${photo.src.tiny}" alt="${photo.alt}">
+            </div>
+            <div class="ig-actions">
+                <div class="left-actions">
+                    <span class="icon">
+                        <i class="fa-regular fa-heart"></i>
+                    </span>                
+                </div>
+                <div class="right-actions">
+                    <span class="icon">
+                        <i class="fa-regular fa-bookmark"></i>
+                    </span>                
+                </div>
+            </div>
+            <div class="ig-likes">
+                Piace a <strong>1.234 persone</strong>
+            </div>
+            <div class="ig-caption">
+                <strong>${photo.author}</strong> ${photo.alt} </div>
+            </div>
+        </div>
+    `
 }
 
+const renderCards = (str) => {
+    const container = document.querySelector(".card-container")
+    container.innerHTML = str
+}
 //Function to check if a button has a class, and switch it with another
 const switchCLass = (el, classToCheck, change) => {
     if (el.classList.contains(classToCheck)) {
@@ -152,11 +101,28 @@ search.addEventListener('click', async (e) => {
                 changeVisibility('.card-container', "grid")
                 changeVisibility('form', "none")
                 changeVisibility('#go-back', "block")
-                photos.forEach(photo => createCard(photo))
+                const cards = []
+                photos.forEach(photo => cards.push(createCard(photo)))
+                const cardsStr = cards.reduce((acc, curr) => {
+                    acc += curr
+                    return acc
+                }, '')
+                renderCards(cardsStr)
+
+                //Event listener on the card buttons 
+                const cardList = document.querySelectorAll('.ig-card')
+                cardList.forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        console.log(e.target)
+                        if (e.target.classList.contains('fa-heart') || e.target.classList.contains('fa-bookmark'))
+                            switchCLass(e.target, 'fa-regular', 'fa-solid')
+                    })
+                })
 
             })
     }
 })
+
 
 
 //Event listener on go back btn
