@@ -256,8 +256,11 @@ button {
 
 .options {
   font-weight: bold;
-  color: #262626;
+  color: #494949;
   cursor: pointer;
+}
+.options:hover {
+  color: #000000;
 }
 
 
