@@ -312,26 +312,67 @@ i.fa-solid.fa-heart{
   margin-bottom: 6px;
 }
 
+#snackbar {
+  visibility: hidden; 
+  min-width: 250px; 
+  margin-left: -125px; 
+  background-color: #BDE1FF; 
+  color: #2b3a4a; 
+  font-weight: 600;
+  box-shadow: 0 10px 20px  #bde1ff8f, 0 0 0 15px #ffffffeb;
+  text-align: center; 
+  border-radius: 20px; 
+  padding: 16px; 
+  position: fixed; 
+  z-index: 1; 
+  left: 50%; 
+  bottom: 30px; 
+}
+
+#snackbar.show {
+  visibility: visible; 
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
 @media screen and (min-width:570px){
   .card-container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-/* Schermi medi (tablet, da 768px in su): 3 card per riga */
+
 @media screen and (min-width: 768px) {
   .card-container {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* Schermi larghi (laptop, da 1024px in su): 4 card per riga */
 @media screen and (min-width: 1024px) {
   .card-container {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-/* Schermi extra-large (desktop grandi, da 1300px in su): 5 card per riga */
 @media screen and (min-width: 1300px) {
   .card-container {
     grid-template-columns: repeat(5, 1fr);
