@@ -132,8 +132,6 @@ const showSnackbar = (message) => {
     setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
 }
 
-
-
 //Event listener on go back btn
 const goBack = document.getElementById('go-back')
 goBack.addEventListener('click', () => {
@@ -143,5 +141,3 @@ goBack.addEventListener('click', () => {
     changeVisibility('#go-back', "none")
     clearScreen()
 })
-
-
